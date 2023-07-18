@@ -1,7 +1,15 @@
 // ❗ You don't need to add extra action creators to achieve MVP
-export function moveClockwise() { }
+import React from "react";
+import { connect } from "react-redux";
+import { MOVE_CLOCKWISE, MOVE_COUNTERCLOCKWISE } from "./action-types";
 
-export function moveCounterClockwise() { }
+export function moveClockwise() {
+  return { type: MOVE_CLOCKWISE };
+ }
+
+export function moveCounterClockwise() {
+  return { type: MOVE_COUNTERCLOCKWISE };
+ }
 
 export function selectAnswer() { }
 
