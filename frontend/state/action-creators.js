@@ -1,6 +1,6 @@
 // ❗ You don't need to add extra action creators to achieve MVP
 import axios from 'axios';
-import { MOVE_CLOCKWISE, MOVE_COUNTERCLOCKWISE, SET_QUIZ_INTO_STATE, SET_SELECTED_ANSWER } from "./action-types";
+import { MOVE_CLOCKWISE, MOVE_COUNTERCLOCKWISE, SET_QUIZ_INTO_STATE, SET_SELECTED_ANSWER, SET_INFO_MESSAGE } from "./action-types";
 
 
 export function moveClockwise() {
@@ -16,7 +16,9 @@ export function selectAnswer(answer) {
 }
 
 
-export function setMessage() { }
+export function setMessage(infoMessage) {
+  return {type: SET_INFO_MESSAGE, payload:infoMessage}
+ }
 
 export function setQuiz(quiz) {
   return {type: SET_QUIZ_INTO_STATE, payload:quiz};
@@ -40,8 +42,17 @@ export function fetchQuiz() {
     // - Dispatch an action to send the obtained quiz to its state
   }
 }
-export function postAnswer() {
+export function postAnswer(quiz_id, answer_id) {
+ 
   return function (dispatch) {
+      axios.post ('http://localhost:9000/api/quiz/answer', {quiz_id:quiz_id, answer_id: answer_id})
+      .then(res => {
+        console.log(res)
+        dispatch(selectAnswer(null))
+        dispatch(setMessage(res.data.message))
+        dispatch(fetchQuiz())
+      })
+      .catch(err => console.log (err))
     // On successful POST:
     // - Dispatch an action to reset the selected answer state
     // - Dispatch an action to set the server message to state

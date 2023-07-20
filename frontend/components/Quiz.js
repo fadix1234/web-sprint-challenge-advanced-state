@@ -1,6 +1,6 @@
 import React from 'react'
 import {connect} from 'react-redux'
-import { fetchQuiz, selectAnswer } from '../state/action-creators'
+import { fetchQuiz, selectAnswer, postAnswer } from '../state/action-creators'
 import { useEffect } from 'react'
 
  function Quiz(props) { 
@@ -10,6 +10,11 @@ import { useEffect } from 'react'
     props.fetchQuiz()
    }
   }, [])
+
+  const handlePostAnswer = ()=> {
+     props.postAnswer (props.quiz.quiz_id, props.selectedAnswer.answer_id)
+  }
+
   return (
     <div id="wrapper">
       {
@@ -37,7 +42,9 @@ import { useEffect } from 'react'
               </div>
             </div>
 
-            <button id="submitAnswerBtn">Submit answer</button>
+            <button 
+            onClick={handlePostAnswer}
+            id="submitAnswerBtn">Submit answer</button>
           </>
         ) : 'Loading next quiz...'
       }
@@ -51,4 +58,4 @@ export default connect((state)=>{
     quiz: state.quiz,
     selectedAnswer: state.selectedAnswer
   }
-}, {fetchQuiz, selectAnswer})(Quiz)
+}, {fetchQuiz, selectAnswer, postAnswer})(Quiz)
