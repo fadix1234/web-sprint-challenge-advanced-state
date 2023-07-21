@@ -14,7 +14,7 @@ function wheel(state = initialWheelState, action) {
 
     default:
       return state;
-}
+  }
 };
 
 const initialQuizState = null
@@ -25,15 +25,15 @@ function quiz(state = initialQuizState, action) {
     default: return state
 
   }
-  
-  
+
+
 }
 
 const initialSelectedAnswerState = null
 function selectedAnswer(state = initialSelectedAnswerState, action) {
-  switch(action.type) {
+  switch (action.type) {
     case SET_SELECTED_ANSWER:
-    return action.payload
+      return action.payload
     default: return state
   }
 
@@ -41,10 +41,10 @@ function selectedAnswer(state = initialSelectedAnswerState, action) {
 
 const initialMessageState = ''
 function infoMessage(state = initialMessageState, action) {
-  switch(action.type) {
+  switch (action.type) {
     case SET_INFO_MESSAGE:
       return action.payload
-      default: return state
+    default: return state
   }
 
 }
@@ -55,13 +55,16 @@ const initialFormState = {
   newFalseAnswer: '',
 }
 function form(state = initialFormState, action) {
-    switch(action.type) {
+  switch (action.type) {
     case INPUT_CHANGE:
-      return action.payload
+      return {
+        ...state,
+        [action.payload.id]: action.payload.value
+      }
     case RESET_FORM:
-      return initialFormState
-      default: return state
-}
+      return (state = initialFormState)
+    default: return state
+  }
 
 }
 

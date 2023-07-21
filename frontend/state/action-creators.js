@@ -24,8 +24,8 @@ export function setQuiz(quiz) {
   return {type: SET_QUIZ_INTO_STATE, payload:quiz};
  }
 
-export function inputChange({inputID, value}) { 
-  return {type: INPUT_CHANGE, payload:{inputID, value}}
+export function inputChange(input) { 
+  return {type: INPUT_CHANGE, payload:input}
 }
 
 export function resetForm() {
@@ -51,7 +51,7 @@ export function postAnswer(quiz_id, answer_id) {
   return function (dispatch) {
       axios.post ('http://localhost:9000/api/quiz/answer', {quiz_id:quiz_id, answer_id: answer_id})
       .then(res => {
-        console.log(res)
+        //console.log(res)
         dispatch(selectAnswer(null))
         dispatch(setMessage(res.data.message))
         dispatch(fetchQuiz())
@@ -63,15 +63,15 @@ export function postAnswer(quiz_id, answer_id) {
     // - Dispatch the fetching of the next quiz
   }
 }
-export function postQuiz(){//question_text, true_answer_text, false_answer_text) {
-
+export function postQuiz(quizDetail) {
+   //console.log('started',quizDetail)
   return function (dispatch) {
-    axios.post ('http://localhost:9000/api/quiz/new') //{question_text:question_text, true_answer_text: true_answer_text, false_answer_text: false_answer_text})
+    axios.post ('http://localhost:9000/api/quiz/new', quizDetail)
     .then(res => {
-      console.log(res, 'ORANGE')
-
-
+      //console.log('ORANGE', res.data)
+      dispatch({type: SET_INFO_MESSAGE, payload:`Congrats: "${quizDetail.question_text}" is a great question!`})
     })
+    .catch(err => console.log (err))
     // On successful POST:
     // - Dispatch the correct message to the the appropriate state
     // - Dispatch the resetting of the form

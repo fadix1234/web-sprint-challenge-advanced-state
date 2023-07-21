@@ -43,6 +43,7 @@ import { useEffect } from 'react'
             </div>
 
             <button 
+            disabled={!props.selectedAnswer}
             onClick={handlePostAnswer}
             id="submitAnswerBtn">Submit answer</button>
           </>
